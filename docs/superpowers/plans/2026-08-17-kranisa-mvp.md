@@ -1,30 +1,31 @@
-# Trip Compare MVP Implementation Plan
+# Kranisa MVP Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build a working MVP of Trip Compare — a site where users search destination + dates + party size and see matching package-holiday offers from Kosovo/Albania travel agencies, plus an admin panel where the site owner manually enters those offers.
+**Goal:** Build a working MVP of Kranisa — a site where users search destination + dates + party size and see matching package-holiday offers from Kosovo/Albania travel agencies, plus an admin panel where the site owner manually enters those offers.
 
 **Architecture:** Monorepo with `server/` (Node/Express REST API + Postgres) and `client/` (React + Vite + Tailwind SPA). Public search endpoint queries offers by destination/date-overlap/capacity. Admin routes are JWT-protected (single hardcoded admin user via env vars, no signup). Frontend calls the API directly; clicking an offer opens the agency's external link in a new tab. No booking/payment flow.
 
 **Tech Stack:** Node.js + Express, PostgreSQL (`pg` driver, hand-written SQL, no ORM), JWT auth (`jsonwebtoken` + `bcrypt`), Vitest + Supertest for backend tests. React + Vite + Tailwind + `react-router-dom` for frontend; lightweight custom i18n context (no external i18n library) for Albanian/English.
 
-**Spec:** `docs/superpowers/specs/2026-08-17-trip-compare-mvp-design.md`
+**Spec:** `docs/superpowers/specs/2026-08-17-kranisa-mvp-design.md`
 
 ## Global Constraints
 
 - No booking or payment happens on the platform — offers link out to the agency (site, WhatsApp, or phone) via `external_link`, opened in a new tab.
 - v1 offer data is entered manually through the admin panel only — no scraping, no agency self-serve.
 - Single admin user for v1 (no public signup, no multi-user roles).
-- Site supports Albanian and English via a language toggle.
+- Site supports Albanian and English via a language toggle, but **Albanian is the primary language** — Albanian copy is the default (`localStorage` lang defaults to `'sq'`) and takes visual priority; English is a secondary toggle option, not equal-weight.
 - Offers whose `end_date` has passed are excluded from public search results but remain visible in the admin list.
 - Package holidays only for v1 (fixed dates, not flexible/custom quotes).
+- Brand is **Kranisa**. Visual direction: pure white ground (no dark-mode swap), crimson `#C81E3A` as the sole loud accent (wordmark/CTAs/prices), pine green `#1F5E4A` in reserve for secondary marks, amber for a "best price" badge, neutral charcoal ink `#1A1A1A`. Bold geometric sans (Futura/Avenir Next style) for the wordmark and headings, tabular numerals for prices. The visual-design-pass steps in Tasks 10 and 12 should match this direction rather than the placeholder blue Tailwind classes used in this plan's baseline code.
 
 ---
 
 ## File Structure
 
 ```
-trip-compare/
+kranisa/
   server/
     src/
       db/
@@ -105,7 +106,7 @@ trip-compare/
 
 ```json
 {
-  "name": "trip-compare-server",
+  "name": "kranisa-server",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -182,14 +183,14 @@ import app from './app.js'
 const port = process.env.PORT || 4000
 
 app.listen(port, () => {
-  console.log(`trip-compare server listening on port ${port}`)
+  console.log(`kranisa server listening on port ${port}`)
 })
 ```
 
 - [ ] **Step 7: Create `server/.env.example`**
 
 ```
-DATABASE_URL=postgres://localhost:5432/trip_compare
+DATABASE_URL=postgres://localhost:5432/kranisa
 PORT=4000
 ADMIN_EMAIL=admin@example.com
 ADMIN_PASSWORD_HASH=
@@ -303,12 +304,12 @@ seed()
 
 Run:
 ```bash
-createdb trip_compare
-createdb trip_compare_test
-psql trip_compare -f server/src/db/schema.sql
-psql trip_compare_test -f server/src/db/schema.sql
+createdb kranisa
+createdb kranisa_test
+psql kranisa -f server/src/db/schema.sql
+psql kranisa_test -f server/src/db/schema.sql
 ```
-Expected: both databases have `agencies`, `destinations`, `offers` tables (verify with `psql trip_compare -c '\dt'`).
+Expected: both databases have `agencies`, `destinations`, `offers` tables (verify with `psql kranisa -c '\dt'`).
 
 - [ ] **Step 5: Create `server/test/db.setup.js`** (shared test helper, truncates tables between tests)
 
@@ -316,7 +317,7 @@ Expected: both databases have `agencies`, `destinations`, `offers` tables (verif
 import pg from 'pg'
 
 export const testPool = new pg.Pool({
-  connectionString: process.env.TEST_DATABASE_URL || 'postgres://localhost:5432/trip_compare_test'
+  connectionString: process.env.TEST_DATABASE_URL || 'postgres://localhost:5432/kranisa_test'
 })
 
 export async function resetDb () {
@@ -326,8 +327,8 @@ export async function resetDb () {
 
 - [ ] **Step 6: Run seed script against the dev database**
 
-Run: `cd server && DATABASE_URL=postgres://localhost:5432/trip_compare node src/db/seed.js`
-Expected: "Seeded 6 destinations" printed; verify with `psql trip_compare -c 'SELECT * FROM destinations'`.
+Run: `cd server && DATABASE_URL=postgres://localhost:5432/kranisa node src/db/seed.js`
+Expected: "Seeded 6 destinations" printed; verify with `psql kranisa -c 'SELECT * FROM destinations'`.
 
 - [ ] **Step 7: Commit**
 
@@ -634,7 +635,7 @@ describe('searchOffers', () => {
 
 - [ ] **Step 2: Run tests to verify they fail**
 
-Run: `cd server && TEST_DATABASE_URL=postgres://localhost:5432/trip_compare_test npx vitest run test/offers.search.test.js`
+Run: `cd server && TEST_DATABASE_URL=postgres://localhost:5432/kranisa_test npx vitest run test/offers.search.test.js`
 Expected: FAIL — `../src/db/offers.js` does not exist.
 
 - [ ] **Step 3: Implement `server/src/db/agencies.js`**
@@ -754,7 +755,7 @@ export async function deleteOffer (pool, id) {
 
 - [ ] **Step 6: Run tests to verify they pass**
 
-Run: `cd server && TEST_DATABASE_URL=postgres://localhost:5432/trip_compare_test npx vitest run test/offers.search.test.js`
+Run: `cd server && TEST_DATABASE_URL=postgres://localhost:5432/kranisa_test npx vitest run test/offers.search.test.js`
 Expected: PASS (6 tests)
 
 - [ ] **Step 7: Commit**
@@ -857,7 +858,7 @@ describe('GET /api/destinations', () => {
 
 - [ ] **Step 2: Run tests to verify they fail**
 
-Run: `cd server && TEST_DATABASE_URL=postgres://localhost:5432/trip_compare_test npx vitest run test/offers.routes.test.js`
+Run: `cd server && TEST_DATABASE_URL=postgres://localhost:5432/kranisa_test npx vitest run test/offers.routes.test.js`
 Expected: FAIL — `app.js` does not export `buildApp`, and `routes/offers.js`/`routes/destinations.js` don't exist yet.
 
 - [ ] **Step 3: Refactor `server/src/app.js` to accept an injectable pool**
@@ -947,7 +948,7 @@ const app = buildApp()
 const port = process.env.PORT || 4000
 
 app.listen(port, () => {
-  console.log(`trip-compare server listening on port ${port}`)
+  console.log(`kranisa server listening on port ${port}`)
 })
 ```
 
@@ -971,7 +972,7 @@ describe('GET /health', () => {
 
 - [ ] **Step 8: Run all backend tests to verify they pass**
 
-Run: `cd server && TEST_DATABASE_URL=postgres://localhost:5432/trip_compare_test npx vitest run`
+Run: `cd server && TEST_DATABASE_URL=postgres://localhost:5432/kranisa_test npx vitest run`
 Expected: PASS (health, validation, search, and route tests all green)
 
 - [ ] **Step 9: Commit**
@@ -1316,7 +1317,7 @@ describe('POST /api/admin/destinations', () => {
 
 - [ ] **Step 3: Run tests to verify they fail**
 
-Run: `cd server && TEST_DATABASE_URL=postgres://localhost:5432/trip_compare_test npx vitest run test/admin.offers.routes.test.js test/admin.agencies.destinations.routes.test.js`
+Run: `cd server && TEST_DATABASE_URL=postgres://localhost:5432/kranisa_test npx vitest run test/admin.offers.routes.test.js test/admin.agencies.destinations.routes.test.js`
 Expected: FAIL — admin routes don't exist yet.
 
 - [ ] **Step 4: Create `server/src/routes/admin-offers.js`**
@@ -1429,7 +1430,7 @@ import buildAdminDestinationsRouter from './routes/admin-destinations.js'
 
 - [ ] **Step 8: Run all backend tests to verify they pass**
 
-Run: `cd server && TEST_DATABASE_URL=postgres://localhost:5432/trip_compare_test npx vitest run`
+Run: `cd server && TEST_DATABASE_URL=postgres://localhost:5432/kranisa_test npx vitest run`
 Expected: PASS — every backend test file green. This completes the backend.
 
 - [ ] **Step 9: Commit**
@@ -1460,7 +1461,7 @@ cd server && git add -A && git commit -m "feat(server): add admin CRUD endpoints
 
 Run:
 ```bash
-cd ~/trip-compare
+cd ~/kranisa
 npm create vite@latest client -- --template react
 cd client
 npm install
@@ -1570,7 +1571,7 @@ cd client && git add -A && git commit -m "feat(client): scaffold Vite React app 
 
 ```json
 {
-  "app.title": "Trip Compare",
+  "app.title": "Kranisa",
   "search.destination": "Destination",
   "search.dateFrom": "From",
   "search.dateTo": "To",
@@ -1591,7 +1592,7 @@ cd client && git add -A && git commit -m "feat(client): scaffold Vite React app 
 
 ```json
 {
-  "app.title": "Trip Compare",
+  "app.title": "Kranisa",
   "search.destination": "Destinacioni",
   "search.dateFrom": "Nga",
   "search.dateTo": "Deri",
@@ -2409,14 +2410,14 @@ cd client && git add -A && git commit -m "feat(client): add admin offers managem
 
 ```yaml
 databases:
-  - name: trip-compare-db
+  - name: kranisa-db
     plan: free
-    databaseName: trip_compare
-    user: trip_compare
+    databaseName: kranisa
+    user: kranisa
 
 services:
   - type: web
-    name: trip-compare-server
+    name: kranisa-server
     runtime: node
     rootDir: server
     plan: free
@@ -2425,7 +2426,7 @@ services:
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: trip-compare-db
+          name: kranisa-db
           property: connectionString
       - key: ADMIN_EMAIL
         sync: false
@@ -2435,22 +2436,22 @@ services:
         generateValue: true
 
   - type: web
-    name: trip-compare-client
+    name: kranisa-client
     runtime: static
     rootDir: client
     buildCommand: npm install && npm run build
     staticPublishPath: dist
     envVars:
       - key: VITE_API_URL
-        value: https://trip-compare-server.onrender.com
+        value: https://kranisa-server.onrender.com
 ```
 
 - [ ] **Step 2: Create root `README.md`**
 
 ```markdown
-# Trip Compare
+# Kranisa
 
-Compare package-holiday offers from Kosovo/Albania travel agencies by destination, dates, and party size. See `docs/superpowers/specs/2026-08-17-trip-compare-mvp-design.md` for the full design.
+Compare package-holiday offers from Kosovo/Albania travel agencies by destination, dates, and party size. See `docs/superpowers/specs/2026-08-17-kranisa-mvp-design.md` for the full design.
 
 ## Local development
 
@@ -2458,8 +2459,8 @@ Compare package-holiday offers from Kosovo/Albania travel agencies by destinatio
 ```bash
 cd server
 cp .env.example .env   # fill in DATABASE_URL, ADMIN_EMAIL, ADMIN_PASSWORD_HASH, JWT_SECRET
-createdb trip_compare
-psql trip_compare -f src/db/schema.sql
+createdb kranisa
+psql kranisa -f src/db/schema.sql
 node src/db/seed.js
 npm install
 npm run dev
@@ -2476,9 +2477,9 @@ npm run dev
 **Tests**
 ```bash
 cd server
-createdb trip_compare_test
-psql trip_compare_test -f src/db/schema.sql
-TEST_DATABASE_URL=postgres://localhost:5432/trip_compare_test npm test
+createdb kranisa_test
+psql kranisa_test -f src/db/schema.sql
+TEST_DATABASE_URL=postgres://localhost:5432/kranisa_test npm test
 ```
 
 ## Deployment

@@ -1,4 +1,4 @@
-# Trip Compare — MVP Design
+# Kranisa — MVP Design
 
 ## Problem
 
@@ -26,7 +26,26 @@ agencies that do have real websites.
 
 ## Target market
 
-Kosovo/Albania region. Site supports Albanian and English (language toggle).
+Kosovo/Albania region. Site supports Albanian and English, with **Albanian as
+the primary language** — Albanian copy is the default and takes visual
+priority; English is a secondary toggle, not an equal-weight option.
+
+## Brand
+
+Name: **Kranisa** (chosen over Farovo/Skovia and others after a naming pass —
+Albanian-flavored, coined, cleared a trademark/domain collision check).
+
+Visual direction: pure white ground (no dark-mode swap — deliberately
+single-theme), crimson red (`#C81E3A`) as the sole loud accent for the
+wordmark/CTAs/prices, deep pine green (`#1F5E4A`) held in reserve for
+secondary marks, amber for a "best price" badge, neutral charcoal ink
+(`#1A1A1A`) rather than warm-toned text. Wordmark and headings use a bold
+geometric sans (Futura/Avenir Next style), body text a system sans, prices
+set in tabular numerals. Each offer card carries its own agency-color mark
+so a long results list stays scannable rather than blurring together
+(a usability issue observed in a competitor, Wanderu, during naming
+research). Reference mock: see the "Kranisa" artifact produced during
+brand ideation for the canonical look.
 
 ## Architecture
 
