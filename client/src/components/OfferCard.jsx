@@ -22,7 +22,7 @@ export default function OfferCard ({ offer, colorIndex = 0, isBestPrice = false 
   return (
     <div className="relative flex items-center gap-4 bg-white border border-[#E4E4E4] rounded-2xl px-4 py-4">
       {isBestPrice && (
-        <span className="absolute -top-2.5 left-4 bg-[#F4B942] text-[#4A3300] text-[0.64rem] font-bold tracking-wide px-2.5 py-1 rounded-full">
+        <span className="font-hand absolute -top-3 left-4 -rotate-3 bg-[#F4B942] text-[#4A3300] text-xs px-3 py-1 rounded-lg shadow-sm">
           {t('offer.bestPrice')}
         </span>
       )}
@@ -36,14 +36,14 @@ export default function OfferCard ({ offer, colorIndex = 0, isBestPrice = false 
 
       <div className="flex-1 min-w-0">
         <div className="text-[0.68rem] uppercase tracking-wide text-[#6B6B6B] font-bold">{offer.agency_name}</div>
-        <div className="text-base font-bold text-[#1A1A1A] mt-0.5">{offer.destination_name}</div>
+        <div className="font-heading text-base font-bold text-[#1A1A1A] mt-0.5">{offer.destination_name}</div>
         <div className="text-sm text-[#6B6B6B] mt-0.5">
           {offer.board_type} · {offer.star_rating ? `${offer.star_rating}★ · ` : ''}{offer.nights} {t('offer.nights')}
         </div>
       </div>
 
       <div className="text-right shrink-0">
-        <div className="text-lg font-bold text-[#1A1A1A] tabular-nums">
+        <div className="font-heading text-lg font-black text-[#1A1A1A] tabular-nums">
           {Number(offer.price_per_person).toFixed(0)} {offer.currency}
         </div>
         <div className="text-[0.68rem] text-[#6B6B6B]">{t('offer.perPerson')}</div>

@@ -75,9 +75,12 @@ export default function SearchForm ({ onSearch }) {
 
       <button
         type="submit"
-        className="col-span-2 sm:col-span-1 bg-[#C81E3A] text-white rounded-lg font-bold text-sm px-5 py-2 hover:bg-[#AD1830] transition-colors"
+        className="col-span-2 sm:col-span-1 flex items-center justify-center gap-2 bg-[#C81E3A] text-white rounded-lg font-bold text-sm py-2 pl-4 pr-2 hover:bg-[#AD1830] transition-colors"
       >
         {t('search.submit')}
+        <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#1A1A1A] text-[#C81E3A]">
+          &rarr;
+        </span>
       </button>
     </form>
   )

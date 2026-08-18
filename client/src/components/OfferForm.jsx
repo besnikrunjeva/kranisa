@@ -59,8 +59,11 @@ export default function OfferForm ({ agencies, destinations, initial, onSubmit, 
       )}
 
       <div className="flex gap-2">
-        <button type="submit" className="bg-[#C81E3A] text-white rounded-lg font-bold text-sm px-5 py-2 hover:bg-[#AD1830] transition-colors">
+        <button type="submit" className="flex items-center gap-2 bg-[#C81E3A] text-white rounded-lg font-bold text-sm py-2 pl-5 pr-2 hover:bg-[#AD1830] transition-colors">
           {t('admin.offers.add')}
+          <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#1A1A1A] text-[#C81E3A]">
+            &rarr;
+          </span>
         </button>
         {onCancel && (
           <button type="button" onClick={onCancel} className="text-[#6B6B6B] text-sm font-semibold px-5 py-2">

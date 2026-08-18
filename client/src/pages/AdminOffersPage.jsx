@@ -48,23 +48,26 @@ export default function AdminOffersPage () {
       <div className="max-w-4xl mx-auto px-6 py-8 flex flex-col gap-6">
         <div className="flex justify-between items-center">
           <div>
-            <p className="text-xl font-bold tracking-tight text-[#1A1A1A]">
-              Kran<span className="text-[#C81E3A]">isa</span>
+            <p className="font-heading text-xl font-black tracking-tight text-[#1A1A1A]">
+              Kran<span className="ml-0.5 rounded-md bg-[#C81E3A] px-1.5 py-0.5 text-white">isa</span>
             </p>
             <h1 className="text-sm text-[#6B6B6B] mt-1">{t('admin.offers.title')}</h1>
           </div>
-          <div className="flex items-center gap-4">
-            <Link to="/" className="text-xs font-semibold text-[#6B6B6B] hover:text-[#1A1A1A]">{t('app.title')}</Link>
-            <button onClick={logout} className="text-xs font-semibold text-[#6B6B6B] hover:text-[#1A1A1A]">{t('admin.logout')}</button>
+          <div className="flex items-center gap-2">
+            <Link to="/" className="rounded-full bg-[#F4F4F4] px-4 py-2 text-xs font-semibold text-[#1A1A1A]">{t('app.title')}</Link>
+            <button onClick={logout} className="rounded-full bg-[#1A1A1A] px-4 py-2 text-xs font-semibold text-white">{t('admin.logout')}</button>
           </div>
         </div>
 
         {!showForm && !editing && (
           <button
             onClick={() => setShowForm(true)}
-            className="self-start bg-[#C81E3A] text-white rounded-lg font-bold text-sm px-5 py-2 hover:bg-[#AD1830] transition-colors"
+            className="self-start flex items-center gap-2 bg-[#C81E3A] text-white rounded-lg font-bold text-sm py-2 pl-5 pr-2 hover:bg-[#AD1830] transition-colors"
           >
             {t('admin.offers.add')}
+            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#1A1A1A] text-[#C81E3A]">
+              &rarr;
+            </span>
           </button>
         )}
 
