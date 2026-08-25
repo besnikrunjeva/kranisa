@@ -1,28 +1,80 @@
 {
   "app.title": "Kranisa",
+  "nav.admin": "Admin",
+
   "hero.eyebrow": "Krahaso oferta pushimesh",
   "hero.headline": "Krahaso ofertat e çdo agjencie,\npa hapur dhjetë tabs.",
   "hero.headlineEn": "Compare every agency's package holidays in one place.",
+  "hero.trust": "Falas · Pa regjistrim · Rezervo direkt me agjencinë",
+
   "search.destination": "Destinacioni",
-  "search.dateFrom": "Nga",
-  "search.dateTo": "Deri",
+  "search.dates": "Datat",
   "search.people": "Udhëtarë",
+  "search.done": "Gati",
   "search.submit": "Kërko",
+  "search.loading": "Duke kërkuar...",
+  "search.destinationsLoading": "Duke ngarkuar destinacionet...",
+
+  "destinations.title": "Destinacione Popullore",
+
   "results.count": "oferta u gjetën",
   "results.sortedByPrice": "Renditur sipas çmimit",
-  "results.empty": "Nuk u gjetën oferta për këto data — provoni të ndryshoni datat ose destinacionin.",
+  "results.empty": "Nuk u gjetën oferta për këto data, provoni të ndryshoni datat ose destinacionin.",
+
   "offer.viewOffer": "Shiko Ofertën",
   "offer.perPerson": "për person",
   "offer.bestPrice": "Çmimi më i mirë",
   "offer.nights": "netë",
+
+  "how.headline": "Tre hapa, kaq thjeshtë.",
+  "how.step1.title": "Kërko",
+  "how.step1.body": "Zgjidh destinacionin, datat dhe numrin e udhëtarëve.",
+  "how.step2.title": "Krahaso",
+  "how.step2.body": "Shiko të gjitha ofertat e agjencive, renditur sipas çmimit.",
+  "how.step3.title": "Rezervo",
+  "how.step3.body": "Kontakto agjencinë direkt dhe mbyll rezervimin me ta.",
+
+  "why.point1": "Pa komision",
+  "why.point2": "Rezervim direkt",
+  "why.point3": "Vetëm agjenci lokale",
+  "why.point4": "Përditësohet rregullisht",
+
+  "faq.title": "Pyetje të Shpeshta",
+  "faq.q1": "A kushton diçka krahasimi i ofertave?",
+  "faq.a1": "Jo. Kranisa është plotësisht falas për udhëtarët, nuk paguani asgjë për të krahasuar apo për t'u lidhur me një agjenci.",
+  "faq.q2": "Si e di që oferta është e vërtetë dhe aktuale?",
+  "faq.a2": "Çdo ofertë kontrollohet dhe shtohet manualisht, dhe ofertat me data të kaluara hiqen automatikisht nga kërkimi.",
+  "faq.q3": "A mund të rezervoj direkt në Kranisa?",
+  "faq.a3": "Jo. Kranisa ju lidh me agjencinë përmes WhatsApp, telefonit ose faqes së tyre. Vetë rezervimi bëhet me agjencinë.",
+  "faq.q4": "Jam agjenci udhëtimi, si i shtoj ofertat e mia?",
+  "faq.a4": "Na shkruani që t'ju regjistrojmë, shihni seksionin më poshtë.",
+
+  "agency.headline": "Jeni agjenci udhëtimi?",
+  "agency.body": "Listohuni falas dhe arrini udhëtarë që po kërkojnë ofertën më të mirë pikërisht tani.",
+  "agency.cta": "Na Kontaktoni",
+
+  "footer.tagline": "Krahaso oferta pushimesh nga agjenci në Kosovë dhe Shqipëri, pa hapur dhjetë tabs.",
+  "footer.nav": "Navigimi",
+  "footer.contact": "Kontakt",
+  "footer.rights": "Të gjitha të drejtat e rezervuara.",
+
+  "admin.title": "Paneli i Administrimit",
   "admin.login.email": "Email",
   "admin.login.password": "Fjalëkalimi",
   "admin.login.submit": "Kyçu",
   "admin.login.error": "Email ose fjalëkalim i pasaktë",
   "admin.logout": "Dil",
-  "admin.offers.title": "Menaxho Ofertat",
+  "admin.agencies.title": "Agjencitë",
+  "admin.agencies.add": "Shto Agjenci",
+  "admin.agencies.empty": "Ende pa agjenci, shtoni një përpara se të krijoni oferta.",
+  "admin.offers.title": "Ofertat",
   "admin.offers.add": "Shto Ofertë",
   "admin.offers.cancel": "Anulo",
   "admin.offers.edit": "Ndrysho",
-  "admin.offers.delete": "Fshi"
+  "admin.offers.delete": "Fshi",
+  "admin.offers.empty": "Ende pa oferta",
+
+  "notFound.title": "Faqja nuk u gjet",
+  "notFound.body": "Kjo faqe nuk ekziston ose është zhvendosur.",
+  "notFound.cta": "Kthehu te kërkimi"
 }

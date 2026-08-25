@@ -10,11 +10,11 @@ export default function OfferList ({ offers }) {
   return (
     <div className="flex flex-col gap-3 mt-8">
       <div className="flex justify-between items-baseline text-sm text-[#6B6B6B] mb-1">
-        <span><strong className="text-[#1A1A1A]">{offers.length}</strong> {t('results.count')}</span>
+        <span><strong className="text-[#241A12]">{offers.length}</strong> {t('results.count')}</span>
         <span>{t('results.sortedByPrice')}</span>
       </div>
       {offers.map((offer, index) => (
-        <OfferCard key={offer.id} offer={offer} colorIndex={index} isBestPrice={index === 0} />
+        <OfferCard key={offer.id} offer={offer} isBestPrice={index === 0} />
       ))}
     </div>
   )

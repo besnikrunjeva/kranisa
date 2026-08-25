@@ -1,28 +1,80 @@
 {
   "app.title": "Kranisa",
+  "nav.admin": "Admin",
+
   "hero.eyebrow": "Compare holiday offers",
   "hero.headline": "Compare every agency's offers,\nwithout opening ten tabs.",
   "hero.headlineEn": "Compare every agency's package holidays in one place.",
+  "hero.trust": "Free · No signup · Book directly with the agency",
+
   "search.destination": "Destination",
-  "search.dateFrom": "From",
-  "search.dateTo": "To",
+  "search.dates": "Dates",
   "search.people": "Travelers",
+  "search.done": "Done",
   "search.submit": "Search",
+  "search.loading": "Searching...",
+  "search.destinationsLoading": "Loading destinations...",
+
+  "destinations.title": "Popular Destinations",
+
   "results.count": "offers found",
   "results.sortedByPrice": "Sorted by price",
-  "results.empty": "No offers found for these dates — try adjusting your dates or destination.",
+  "results.empty": "No offers found for these dates, try adjusting your dates or destination.",
+
   "offer.viewOffer": "View Offer",
   "offer.perPerson": "per person",
   "offer.bestPrice": "Best price",
   "offer.nights": "nights",
+
+  "how.headline": "Three steps, that's it.",
+  "how.step1.title": "Search",
+  "how.step1.body": "Pick your destination, dates, and number of travelers.",
+  "how.step2.title": "Compare",
+  "how.step2.body": "See every agency's offer, sorted by price.",
+  "how.step3.title": "Book",
+  "how.step3.body": "Contact the agency directly and finish booking with them.",
+
+  "why.point1": "No commission",
+  "why.point2": "Direct booking",
+  "why.point3": "Local agencies only",
+  "why.point4": "Updated regularly",
+
+  "faq.title": "Frequently Asked Questions",
+  "faq.q1": "Does comparing offers cost anything?",
+  "faq.a1": "No. Kranisa is completely free for travelers, you pay nothing to compare or to reach out to an agency.",
+  "faq.q2": "How do I know an offer is real and current?",
+  "faq.a2": "Every offer is checked and added manually, and offers with past dates are automatically removed from search.",
+  "faq.q3": "Can I book directly on Kranisa?",
+  "faq.a3": "No. Kranisa connects you with the agency by WhatsApp, phone, or their site. Booking itself happens with the agency.",
+  "faq.q4": "I run a travel agency, how do I add my offers?",
+  "faq.a4": "Reach out and we'll get you set up, see the section below.",
+
+  "agency.headline": "Run a travel agency?",
+  "agency.body": "List for free and reach travelers looking for the best offer right now.",
+  "agency.cta": "Contact Us",
+
+  "footer.tagline": "Compare holiday offers from agencies in Kosovo and Albania, without opening ten tabs.",
+  "footer.nav": "Navigation",
+  "footer.contact": "Contact",
+  "footer.rights": "All rights reserved.",
+
+  "admin.title": "Admin Panel",
   "admin.login.email": "Email",
   "admin.login.password": "Password",
   "admin.login.submit": "Log in",
   "admin.login.error": "Incorrect email or password",
   "admin.logout": "Log out",
-  "admin.offers.title": "Manage Offers",
+  "admin.agencies.title": "Agencies",
+  "admin.agencies.add": "Add Agency",
+  "admin.agencies.empty": "No agencies yet, add one before creating offers.",
+  "admin.offers.title": "Offers",
   "admin.offers.add": "Add Offer",
   "admin.offers.cancel": "Cancel",
   "admin.offers.edit": "Edit",
-  "admin.offers.delete": "Delete"
+  "admin.offers.delete": "Delete",
+  "admin.offers.empty": "No offers yet",
+
+  "notFound.title": "Page not found",
+  "notFound.body": "This page does not exist or has moved.",
+  "notFound.cta": "Back to search"
 }

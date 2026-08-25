@@ -5,6 +5,7 @@ import RequireAdmin from './auth/RequireAdmin.jsx'
 import SearchPage from './pages/SearchPage.jsx'
 import AdminLoginPage from './pages/AdminLoginPage.jsx'
 import AdminOffersPage from './pages/AdminOffersPage.jsx'
+import NotFoundPage from './pages/NotFoundPage.jsx'
 
 export default function App () {
   return (
@@ -15,6 +16,7 @@ export default function App () {
             <Route path="/" element={<SearchPage />} />
             <Route path="/admin/login" element={<AdminLoginPage />} />
             <Route path="/admin" element={<RequireAdmin><AdminOffersPage /></RequireAdmin>} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

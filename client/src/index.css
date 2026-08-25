@@ -3,4 +3,52 @@
 @theme {
   --font-heading: "Archivo", ui-sans-serif, system-ui, sans-serif;
   --font-hand: "Sedgwick Ave", cursive;
+  --font-wordmark: "Special Elite", "Courier New", monospace;
+  --font-body: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
 }
+
+.marker-highlight {
+  background-image: linear-gradient(120deg, rgba(144, 88, 49, 0.35) 0%, rgba(144, 88, 49, 0.35) 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 0.42em;
+  background-position: 0 88%;
+  animation: marker-sweep 0.7s 0.55s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+
+@keyframes marker-sweep {
+  from { background-size: 0% 0.42em; }
+  to { background-size: 100% 0.42em; }
+}
+
+/* staggered hero entrance — eyebrow, headline, subtitle, search bar and
+   trust line each rise + fade in on load, timed with animationDelay */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    /* literal `none`, not translateY(0) — any non-none transform value,
+       even the identity, permanently creates a new stacking context once
+       the animation's fill-mode holds it, which was breaking backdrop-blur
+       on the glass search bar nested inside this wrapper */
+    transform: none;
+  }
+}
+
+.hero-rise {
+  animation: hero-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marker-highlight { animation: none; }
+  .hero-rise { animation: none; opacity: 1; transform: none; }
+}
+
+.hero-glow {
+  background: radial-gradient(60% 55% at 50% 0%, rgba(224, 148, 92, 0.28) 0%, rgba(224, 148, 92, 0) 100%);
+}
+
+

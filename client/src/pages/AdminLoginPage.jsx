@@ -4,6 +4,8 @@ import { useI18n } from '../i18n/I18nContext.jsx'
 import { useAuth } from '../auth/AuthContext.jsx'
 import { login as loginRequest } from '../api/auth.js'
 
+const INK = '#6B3A1E'
+
 export default function AdminLoginPage () {
   const { t } = useI18n()
   const { login } = useAuth()
@@ -25,12 +27,11 @@ export default function AdminLoginPage () {
   }
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-6">
+    <div className="min-h-screen bg-[#FAFAF8] flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
-        <p className="font-heading text-2xl font-black tracking-tight text-[#1A1A1A] text-center mb-8">
-          Kran<span className="ml-0.5 rounded-md bg-[#C81E3A] px-1.5 py-0.5 text-white">isa</span>
-        </p>
-        <form onSubmit={handleSubmit} className="bg-white border border-[#E4E4E4] rounded-2xl p-6 flex flex-col gap-4">
+        <p className="font-wordmark text-2xl text-[#0A0A0A] text-center mb-8">kranisa</p>
+
+        <form onSubmit={handleSubmit} className="bg-[#FDF9F2] border rounded-none p-6 flex flex-col gap-4" style={{ borderColor: INK }}>
           <label className="flex flex-col gap-1 text-sm">
             <span className="text-[#6B6B6B] font-semibold">{t('admin.login.email')}</span>
             <input
@@ -38,7 +39,8 @@ export default function AdminLoginPage () {
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
-              className="border border-[#E4E4E4] rounded-lg px-3 py-2 outline-none focus:border-[#C81E3A]"
+              className="border rounded-lg px-3 py-2 outline-none bg-white text-[#241A12]"
+              style={{ borderColor: '#DDD0BC' }}
             />
           </label>
           <label className="flex flex-col gap-1 text-sm">
@@ -48,22 +50,20 @@ export default function AdminLoginPage () {
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
-              className="border border-[#E4E4E4] rounded-lg px-3 py-2 outline-none focus:border-[#C81E3A]"
+              className="border rounded-lg px-3 py-2 outline-none bg-white text-[#241A12]"
+              style={{ borderColor: '#DDD0BC' }}
             />
           </label>
-          {error && <div className="text-red-600 text-sm">{t('admin.login.error')}</div>}
+          {error && <div className="text-red-700 text-sm">{t('admin.login.error')}</div>}
           <button
             type="submit"
-            className="flex items-center justify-center gap-2 bg-[#C81E3A] text-white rounded-lg font-bold text-sm py-2.5 pl-5 pr-2 hover:bg-[#AD1830] transition-colors"
+            className="flex items-center justify-center gap-2 bg-[#0A0A0A] text-white rounded-full font-medium text-sm py-2.5 px-5 hover:bg-[#241A12] transition-colors"
           >
             {t('admin.login.submit')}
-            <span className="flex h-6 w-6 items-center justify-center rounded-md bg-[#1A1A1A] text-[#C81E3A]">
-              &rarr;
-            </span>
           </button>
         </form>
-        <Link to="/" className="block text-center text-xs text-[#6B6B6B] mt-4 hover:text-[#1A1A1A]">
-          ← {t('app.title')}
+        <Link to="/" className="block text-center text-xs text-[#6B6B6B] mt-4 hover:text-[#0A0A0A]">
+          &larr; {t('app.title')}
         </Link>
       </div>
     </div>
