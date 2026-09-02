@@ -7,6 +7,7 @@ import adminAuthRouter from './routes/auth.js'
 import buildAdminOffersRouter from './routes/admin-offers.js'
 import buildAdminAgenciesRouter from './routes/admin-agencies.js'
 import buildAdminDestinationsRouter from './routes/admin-destinations.js'
+import buildPlannerRouter from './routes/planner.js'
 
 export function buildApp (pool = defaultPool) {
   const app = express()
@@ -20,6 +21,7 @@ export function buildApp (pool = defaultPool) {
 
   app.use('/api/offers', buildOffersRouter(pool))
   app.use('/api/destinations', buildDestinationsRouter(pool))
+  app.use('/api/planner', buildPlannerRouter(pool))
   app.use('/api/admin', adminAuthRouter)
   app.use('/api/admin/offers', buildAdminOffersRouter(pool))
   app.use('/api/admin/agencies', buildAdminAgenciesRouter(pool))

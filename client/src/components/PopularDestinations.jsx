@@ -1,49 +1,44 @@
+import { useEffect, useState } from 'react'
 import { useI18n } from '../i18n/I18nContext.jsx'
+import { listPopularDestinations } from '../api/destinations.js'
+import { DestinationCard } from './ui/destination-card.jsx'
 
-const INK = '#6B3A1E'
-const PAPER = '#FDF9F2'
-
-// Static for now — matches server/src/db/seed.js. Once destination browsing
-// is wired to the API this can come from listDestinations() instead.
-const DESTINATIONS = [
-  'Antalya, Turkey',
-  'Bodrum, Turkey',
-  'Sharm El Sheikh, Egypt',
-  'Hurghada, Egypt',
-  'Rhodes, Greece',
-  'Crete, Greece'
-]
-
-export default function PopularDestinations () {
+export default function PopularDestinations ({ onSelect }) {
   const { t } = useI18n()
+  const [destinations, setDestinations] = useState([])
+
+  useEffect(() => {
+    listPopularDestinations(6).then(setDestinations).catch(() => {})
+  }, [])
+
+  if (destinations.length === 0) return null
 
   return (
-    <div className="font-mono max-w-4xl mx-auto px-6 mt-14">
-      <p className="text-xs uppercase tracking-wide mb-3" style={{ color: INK }}>
+    <section className="relative z-0 max-w-6xl mx-auto px-6 pt-24 pb-4">
+      <h2 className="font-heading text-2xl sm:text-3xl font-semibold tracking-[-0.015em] text-ink text-balance">
         {t('destinations.title')}
-      </p>
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        {DESTINATIONS.map((name, i) => {
-          const filled = i % 2 === 1
+      </h2>
+
+      <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        {destinations.map((d, i) => {
+          const [city, country] = d.name.split(', ')
           return (
-            <div
-              key={name}
-              className="px-3 py-3 border transition-colors"
-              style={{
-                borderColor: INK,
-                background: filled ? INK : PAPER
-              }}
+            <button
+              key={d.id}
+              type="button"
+              onClick={() => onSelect(d.id)}
+              style={{ animationDelay: `${i * 50}ms` }}
+              className="card-rise block w-full aspect-[3/4] rounded-xl border-0 bg-transparent p-0 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary focus-visible:outline-offset-2"
             >
-              <div
-                className="text-sm"
-                style={{ color: filled ? PAPER : '#241A12' }}
-              >
-                {name}
-              </div>
-            </div>
+              <DestinationCard
+                imageUrl={`https://picsum.photos/seed/kranisa-dest-${d.id}/500/650`}
+                category={country || ''}
+                title={city || d.name}
+              />
+            </button>
           )
         })}
       </div>
-    </div>
+    </section>
   )
 }

@@ -1,24 +1,119 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
+/*
+ * Kranisa's design tokens — the "Modern Minimal" 21st.dev community theme
+ * (serafimcloud): blue, Inter, tight radii. Replaced the earlier
+ * "Peak & Route" warm sand/rust palette site-wide.
+ */
 @theme {
-  --font-heading: "Archivo", ui-sans-serif, system-ui, sans-serif;
-  --font-hand: "Sedgwick Ave", cursive;
-  --font-wordmark: "Special Elite", "Courier New", monospace;
-  --font-body: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-heading: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-wordmark: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-2: #f3f4f6;
+  --color-ink: #333333;
+  --color-muted-2: #6b7280;
+  --color-border: #e5e7eb;
+  --color-primary: #3b82f6;
+  --color-primary-ink: #ffffff;
+  --color-secondary: #1e3a8a;
+  --color-secondary-ink: #ffffff;
+  --color-danger: #ef4444;
+
+  /*
+   * shadcn/ui standard token names, aliased onto the same palette above —
+   * lets components pasted straight from 21st.dev (which are always
+   * authored against these names) pick up our colors with zero className
+   * edits.
+   */
+  --color-background: #ffffff;
+  --color-foreground: #333333;
+  --color-card: #ffffff;
+  --color-card-foreground: #333333;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #333333;
+  --color-primary-foreground: #ffffff;
+  --color-secondary-foreground: #ffffff;
+  --color-muted: #f9fafb;
+  --color-muted-foreground: #6b7280;
+  --color-accent: #e0f2fe;
+  --color-accent-foreground: #1e3a8a;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-input: #e5e7eb;
+  --color-ring: #3b82f6;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 10px;
+
+  /* Radix Accordion's open/close height animation — not part of
+     tw-animate-css, shadcn projects always define these themselves. */
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
 }
 
-.marker-highlight {
-  background-image: linear-gradient(120deg, rgba(144, 88, 49, 0.35) 0%, rgba(144, 88, 49, 0.35) 100%);
-  background-repeat: no-repeat;
-  background-size: 100% 0.42em;
-  background-position: 0 88%;
-  animation: marker-sweep 0.7s 0.55s cubic-bezier(0.65, 0, 0.35, 1) both;
+/*
+ * Dark mode — Modern Minimal's own dark variant (same theme, not a
+ * different one). Toggled by the footer's Sun/Moon switch, which sets a
+ * `dark` class on <html> (persisted in localStorage).
+ */
+:root.dark {
+  --color-bg: #171717;
+  --color-surface: #262626;
+  --color-surface-2: #1f1f1f;
+  --color-ink: #e5e5e5;
+  --color-muted-2: #a3a3a3;
+  --color-border: #404040;
+  --color-primary: #3b82f6;
+  --color-primary-ink: #ffffff;
+  --color-secondary: #262626;
+  --color-secondary-ink: #e5e5e5;
+  --color-danger: #ef4444;
+
+  --color-background: #171717;
+  --color-foreground: #e5e5e5;
+  --color-card: #262626;
+  --color-card-foreground: #e5e5e5;
+  --color-popover: #262626;
+  --color-popover-foreground: #e5e5e5;
+  --color-primary-foreground: #ffffff;
+  --color-secondary-foreground: #e5e5e5;
+  --color-muted: #1f1f1f;
+  --color-muted-foreground: #a3a3a3;
+  --color-accent: #1e3a8a;
+  --color-accent-foreground: #bfdbfe;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-input: #404040;
+  --color-ring: #3b82f6;
 }
 
-@keyframes marker-sweep {
-  from { background-size: 0% 0.42em; }
-  to { background-size: 100% 0.42em; }
+/*
+ * Base text/background color. Without this, any element that doesn't
+ * explicitly set a theme-aware text class (e.g. a Button variant with no
+ * default color, or plain inherited text) falls back to the browser's UA
+ * default (black) instead of our tokens — invisible in light mode since
+ * our ink is also near-black, but very visible as "text stuck black" once
+ * dark mode switches --color-ink to a light gray and this never updates.
+ */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+}
+
+@keyframes accordion-down {
+  from { height: 0; }
+  to { height: var(--radix-accordion-content-height); }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); }
+  to { height: 0; }
 }
 
 /* staggered hero entrance — eyebrow, headline, subtitle, search bar and
@@ -43,12 +138,75 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marker-highlight { animation: none; }
   .hero-rise { animation: none; opacity: 1; transform: none; }
 }
 
-.hero-glow {
-  background: radial-gradient(60% 55% at 50% 0%, rgba(224, 148, 92, 0.28) 0%, rgba(224, 148, 92, 0) 100%);
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Card/grid entrance — extends the hero-rise pattern above for lists that
+   appear after a fetch (search results, popular destinations). Each item
+   rises + fades; a per-item inline `animationDelay` staggers the group.
+   Because React reuses keyed cards across re-filters, only cards that
+   actually mount replay this — settled cards don't popcorn. */
+@keyframes card-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.card-rise {
+  animation: card-rise 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Popover/menu enter — small surfaces grow from the corner nearest their
+   trigger (set transform-origin at the call site). Unifies the hand-rolled
+   dropdowns with the date-picker Popover's zoom+fade. Exit is instant since
+   these unmount on close, which is fine at this size. */
+@keyframes menu-in {
+  from { opacity: 0; transform: scale(0.96) translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+.menu-in {
+  animation: menu-in 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Save-heart confirmation pop — plays only on the toggle-to-saved. */
+@keyframes heart-pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+.heart-pop {
+  animation: heart-pop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-rise { animation: none; opacity: 1; transform: none; }
+  .menu-in,
+  .heart-pop { animation: none; }
+}
+
+/* When the viewer asks for less transparency, translucent chrome (header
+   pill, dropdown menus, the save-heart) becomes an opaque surface with the
+   blur dropped — legibility over vibrancy. Uses the theme-aware card token,
+   so it stays correct in light and dark. */
+@media (prefers-reduced-transparency: reduce) {
+  [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: var(--color-card) !important;
+  }
+}
+
+/* Higher-contrast request: give borders and inputs a near-solid edge in
+   both themes so structure reads without relying on subtle grays. */
+@media (prefers-contrast: more) {
+  :root { --color-border: #0a0a0a; --color-input: #0a0a0a; }
+  :root.dark { --color-border: #fafafa; --color-input: #fafafa; }
 }
 
 

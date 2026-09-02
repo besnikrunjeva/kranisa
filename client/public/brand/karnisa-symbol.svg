@@ -1,0 +1,22 @@
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Karnisa symbol</title>
+  <desc id="desc">A geometric route-inspired K symbol for Karnisa.</desc>
+  <defs>
+    <clipPath id="markClip">
+      <rect x="40" y="40" width="160" height="160" rx="40"/>
+    </clipPath>
+  </defs>
+
+  <rect x="40" y="40" width="160" height="160" rx="40" fill="#FFF7F0"/>
+  <rect x="40" y="40" width="160" height="160" rx="40" stroke="#E9DDD2" stroke-width="4"/>
+
+  <g clip-path="url(#markClip)">
+    <path d="M72 168V72" stroke="#111111" stroke-width="20" stroke-linecap="round"/>
+    <path d="M82 120L157 72" stroke="#C81E3A" stroke-width="20" stroke-linecap="round"/>
+    <path d="M82 120L160 170" stroke="#C81E3A" stroke-width="20" stroke-linecap="round"/>
+    <path d="M105 120C124 111 139 96 151 77" stroke="#1F5E4A" stroke-width="6" stroke-linecap="round" stroke-dasharray="1 15"/>
+    <circle cx="157" cy="72" r="13" fill="#1F5E4A"/>
+    <circle cx="160" cy="170" r="13" fill="#1F5E4A"/>
+    <circle cx="82" cy="120" r="10" fill="#111111"/>
+  </g>
+</svg>

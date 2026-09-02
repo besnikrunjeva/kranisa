@@ -11,9 +11,23 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Sedgwick+Ave&family=Special+Elite&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=JetBrains+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <script>
+      // Applied before first paint to avoid a light-mode flash on load —
+      // ThemeSwitcher.jsx owns the toggle/localStorage key, this just
+      // mirrors its logic synchronously.
+      (function () {
+        try {
+          var stored = localStorage.getItem('kranisa-color-scheme')
+          var dark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches
+          if (dark) document.documentElement.classList.add('dark')
+        } catch (e) {}
+      })()
+    </script>
+    <!-- GetYourGuide affiliate widget platform (partner XL9UH9W) -->
+    <script async defer src="https://widget.getyourguide.com/dist/pa.umd.production.min.js" data-gyg-partner-id="XL9UH9W"></script>
   </head>
   <body>
     <div id="root"></div>

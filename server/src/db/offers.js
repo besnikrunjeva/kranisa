@@ -6,19 +6,48 @@ const OFFER_COLUMNS = `
   d.name AS destination_name
 `
 
-export async function searchOffers (pool, { destinationId, dateFrom, dateTo, people }) {
+export async function searchOffers (pool, { destinationId, dateFrom = null, dateTo = null, people }) {
+  // dateFrom/dateTo are optional — omitting them returns every current offer
+  // for the destination instead of filtering by an overlap window, which is
+  // what powers the "no exact match, but here's what's available" fallback.
+  const hasDates = Boolean(dateFrom && dateTo)
+  const orderBy = hasDates ? 'o.price_per_person ASC' : 'o.start_date ASC, o.price_per_person ASC'
   const { rows } = await pool.query(
     `SELECT ${OFFER_COLUMNS}
      FROM offers o
      JOIN agencies a ON a.id = o.agency_id
      JOIN destinations d ON d.id = o.destination_id
      WHERE o.destination_id = $1
-       AND o.start_date <= $2
-       AND o.end_date >= $3
-       AND o.capacity >= $4
+       AND o.capacity >= $2
        AND o.end_date >= CURRENT_DATE
-     ORDER BY o.price_per_person ASC`,
-    [destinationId, dateTo, dateFrom, people]
+       AND ($3::date IS NULL OR o.start_date <= $3)
+       AND ($4::date IS NULL OR o.end_date >= $4)
+     ORDER BY ${orderBy}`,
+    [destinationId, people, dateTo, dateFrom]
+  )
+  return rows
+}
+
+export async function getOfferById (pool, id) {
+  const { rows } = await pool.query(
+    `SELECT ${OFFER_COLUMNS}
+     FROM offers o
+     JOIN agencies a ON a.id = o.agency_id
+     JOIN destinations d ON d.id = o.destination_id
+     WHERE o.id = $1`,
+    [id]
+  )
+  return rows[0] || null
+}
+
+export async function listCurrentOffers (pool) {
+  const { rows } = await pool.query(
+    `SELECT ${OFFER_COLUMNS}
+     FROM offers o
+     JOIN agencies a ON a.id = o.agency_id
+     JOIN destinations d ON d.id = o.destination_id
+     WHERE o.end_date >= CURRENT_DATE
+     ORDER BY o.start_date ASC, o.price_per_person ASC`
   )
   return rows
 }

@@ -1,23 +1,37 @@
 import { useEffect, useState } from 'react'
+import { Plane } from 'lucide-react'
 import { useI18n } from '../i18n/I18nContext.jsx'
 import { listDestinations } from '../api/destinations.js'
+import { Button } from './ui/button.tsx'
+import { Separator } from './ui/separator.tsx'
 import DestinationSelect from './DestinationSelect.jsx'
 import DateRangePicker from './DateRangePicker.jsx'
-import PeopleSelect from './PeopleSelect.jsx'
 
-export default function SearchForm ({ onSearch }) {
+// The API still filters by capacity, but the field is no longer exposed in
+// the UI — search no longer asks how many people are traveling.
+const DEFAULT_PEOPLE = 2
+
+export default function SearchForm ({ onSearch, initialDestinationId = '', initialDateFrom = '', initialDateTo = '' }) {
   const { t } = useI18n()
   const [destinations, setDestinations] = useState([])
-  const [destinationId, setDestinationId] = useState('')
-  const [dateFrom, setDateFrom] = useState('')
-  const [dateTo, setDateTo] = useState('')
-  const [people, setPeople] = useState(2)
+  const [destinationsError, setDestinationsError] = useState(false)
+  const [destinationId, setDestinationId] = useState(initialDestinationId)
+  const [dateFrom, setDateFrom] = useState(initialDateFrom)
+  const [dateTo, setDateTo] = useState(initialDateTo)
   const [showErrors, setShowErrors] = useState(false)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    listDestinations().then(setDestinations)
+    listDestinations()
+      .then(setDestinations)
+      .catch(() => setDestinationsError(true))
   }, [])
+
+  // Lets a parent (e.g. a destination picked from PopularDestinations) push a
+  // selection in after mount — typing in the field itself never touches this.
+  useEffect(() => {
+    if (initialDestinationId) setDestinationId(initialDestinationId)
+  }, [initialDestinationId])
 
   function handleDateChange ({ dateFrom: from, dateTo: to }) {
     setDateFrom(from)
@@ -33,7 +47,7 @@ export default function SearchForm ({ onSearch }) {
     setShowErrors(false)
     setLoading(true)
     try {
-      await onSearch({ destinationId, dateFrom, dateTo, people })
+      await onSearch({ destinationId, dateFrom, dateTo, people: DEFAULT_PEOPLE })
     } finally {
       setLoading(false)
     }
@@ -42,44 +56,41 @@ export default function SearchForm ({ onSearch }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="font-body flex flex-col sm:flex-row items-stretch bg-white border border-[#E5E5E5] rounded-2xl shadow-sm"
+      className="font-body w-full rounded-xl border border-border bg-card text-card-foreground flex flex-col sm:flex-row sm:items-stretch"
     >
-      <div className="flex flex-1 flex-col sm:flex-row divide-y sm:divide-y-0 sm:divide-x divide-[#E5E5E5] min-w-0">
-        <div className="flex-[1.3] min-w-0 px-4 py-3 flex flex-col justify-center">
-          <span className="text-[0.62rem] uppercase tracking-wide text-[#767676]">{t('search.destination')}</span>
+      <div className="flex flex-1 flex-col sm:flex-row sm:items-center divide-y sm:divide-y-0 divide-border min-w-0">
+        <div className="flex-1 min-w-0 px-4 py-3">
           <DestinationSelect
             destinations={destinations}
+            error={destinationsError}
             value={destinationId}
             onChange={setDestinationId}
-            placeholder="-"
+            placeholder={t('search.destinationPlaceholder')}
+            label={t('search.destination')}
             invalid={showErrors && !destinationId}
           />
         </div>
 
-        <div className="flex-[1.3] min-w-0 px-4 py-3 flex flex-col justify-center">
-          <span className="text-[0.62rem] uppercase tracking-wide text-[#767676]">{t('search.dates')}</span>
+        <Separator orientation="vertical" className="hidden sm:block h-auto self-stretch" />
+
+        <div className="flex-1 min-w-0 px-4 py-3">
           <DateRangePicker
             dateFrom={dateFrom}
             dateTo={dateTo}
             onChange={handleDateChange}
-            placeholder="dd.mm - dd.mm"
             invalid={showErrors && (!dateFrom || !dateTo)}
           />
         </div>
-
-        <div className="flex-1 min-w-0 px-4 py-3 flex flex-col justify-center">
-          <span className="text-[0.62rem] uppercase tracking-wide text-[#767676]">{t('search.people')}</span>
-          <PeopleSelect value={people} onChange={setPeople} />
-        </div>
       </div>
 
-      <button
+      <Button
         type="submit"
         disabled={loading}
-        className="flex items-center justify-center bg-[#0A0A0A] text-white font-medium text-sm py-3.5 px-6 hover:bg-[#241A12] disabled:opacity-60 rounded-bl-2xl rounded-br-2xl sm:rounded-bl-none sm:rounded-tr-2xl"
+        className="w-full sm:w-auto h-auto px-8 rounded-none rounded-b-xl sm:rounded-bl-none sm:rounded-tr-xl sm:rounded-br-xl"
       >
+        <Plane className="mr-2 h-4 w-4" />
         {loading ? t('search.loading') : t('search.submit')}
-      </button>
+      </Button>
     </form>
   )
 }
